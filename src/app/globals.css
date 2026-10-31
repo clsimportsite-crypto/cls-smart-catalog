@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+/*
+  Identidade CLS Smart Catalog — "titânio e ultramar".
+  Cinza metálico de aparelho, tinta grafite e um azul ultramar
+  como única cor de ação. Laranja só para o que pede atenção.
+*/
+@theme {
+  --color-titanio: #e6e8eb;
+  --color-vidro: #f7f8fa;
+  --color-branco: #ffffff;
+  --color-tinta: #15171c;
+  --color-grafite: #5b616c;
+  --color-nevoa: #8b919b;
+  --color-linha: #d2d6dc;
+  --color-ultramar: #2236f0;
+  --color-ultramar-escuro: #1626b8;
+  --color-ultramar-claro: #e7e9fe;
+  --color-alerta: #f25a12;
+  --color-alerta-claro: #feeadf;
+  --color-ok: #0c8f62;
+  --color-ok-claro: #def4ea;
+
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius-placa: 20px;
+  --radius-campo: 12px;
+
+  --ease-mola: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-titanio);
+  color: var(--color-tinta);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Textura de titânio escovado: listras finíssimas, quase imperceptíveis */
+.escovado {
+  background-image:
+    repeating-linear-gradient(90deg, rgb(255 255 255 / 0.22) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #eceef1 0%, #dfe2e6 100%);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ultramar);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
