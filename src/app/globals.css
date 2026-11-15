@@ -21,6 +21,11 @@
   --color-ok: #0c8f62;
   --color-ok-claro: #def4ea;
 
+  /* Vitrine: o palco escuro onde o aparelho é a luz */
+  --color-noite: #0a0b0f;
+  --color-breu: #13151b;
+  --color-ultramar-luz: #98a2ff;
+
   --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
@@ -63,4 +68,23 @@ body {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Vitrine: tamanho da peça no palco (1u = 1% da altura do aparelho) */
+.palco-peca {
+  --u: calc(min(31dvh, 62vw) / 100);
+}
+@media (min-width: 1024px) {
+  .palco-peca {
+    --u: calc(min(60dvh, 30vw) / 100);
+  }
+}
+.vitrine :focus-visible {
+  outline-color: var(--color-ultramar-luz);
+}
+.sem-barra {
+  scrollbar-width: none;
+}
+.sem-barra::-webkit-scrollbar {
+  display: none;
 }

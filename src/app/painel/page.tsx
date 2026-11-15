@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { clsx } from "clsx";
 import { createClient } from "@/lib/supabase/server";
 import { carregarSessao, NOME_PAPEL } from "@/lib/loja";
@@ -19,9 +20,9 @@ function saudacao() {
 const FASES = [
   { n: 0, nome: "Fundação", estado: "pronta" },
   { n: 1, nome: "Importação inteligente", estado: "construindo" },
-  { n: 2, nome: "Produtos e preços", estado: "depois" },
+  { n: 2, nome: "Produtos e preços", estado: "construindo" },
   { n: 3, nome: "Fotos certas", estado: "depois" },
-  { n: 4, nome: "Vitrine e WhatsApp", estado: "depois" },
+  { n: 4, nome: "Vitrine e WhatsApp", estado: "construindo" },
   { n: 5, nome: "Painel de números", estado: "depois" },
   { n: 6, nome: "Outras lojas", estado: "depois" },
 ] as const;
@@ -38,20 +39,20 @@ export default async function PaginaInicio() {
     return q;
   };
 
-  const [todos, ativos, revisao, categorias, importacoes] = await Promise.all([
+  const [todos, ativos, vendidos, pedidosNovos, importacoes] = await Promise.all([
     contar(),
     contar("ativo"),
-    contar("revisao"),
-    supabase.from("cat_categorias").select("id", { count: "exact", head: true }).eq("empresa_id", eid),
+    contar("vendido"),
+    supabase.from("cat_pedidos").select("id", { count: "exact", head: true }).eq("empresa_id", eid).eq("status", "novo"),
     supabase.from("cat_importacoes").select("id", { count: "exact", head: true }).eq("empresa_id", eid),
   ]);
 
   const numeros = [
-    { rotulo: "Produtos no catálogo", valor: todos.count ?? 0 },
+    { rotulo: "Pedidos esperando", valor: pedidosNovos.count ?? 0, atencao: (pedidosNovos.count ?? 0) > 0 },
     { rotulo: "Na vitrine agora", valor: ativos.count ?? 0 },
-    { rotulo: "Esperando revisão", valor: revisao.count ?? 0, atencao: (revisao.count ?? 0) > 0 },
+    { rotulo: "Vendidos", valor: vendidos.count ?? 0 },
+    { rotulo: "Aparelhos no catálogo", valor: todos.count ?? 0 },
     { rotulo: "Listas importadas", valor: importacoes.count ?? 0 },
-    { rotulo: "Categorias", valor: categorias.count ?? 0 },
   ];
 
   return (
@@ -81,14 +82,18 @@ export default async function PaginaInicio() {
 
       <section className="mt-12 grid gap-8 lg:grid-cols-[1fr_1.1fr]">
         <div className="rounded-placa bg-tinta p-7 text-white">
-          <h2 className="font-display text-[24px] font-semibold tracking-tight">O catálogo está vazio, e isso é o esperado.</h2>
-          <p className="mt-3 max-w-[34ch] text-[15.5px] leading-relaxed text-white/70">
-            A base está pronta e segura. O próximo passo é a importação inteligente: colar a lista do fornecedor e ver os
-            produtos aparecerem organizados.
+          <h2 className="font-display text-[24px] font-semibold tracking-tight">A vitrine de revenda está no ar.</h2>
+          <p className="mt-3 max-w-[36ch] text-[15.5px] leading-relaxed text-white/70">
+            Mande o link para os revendedores em vez da lista. O que eles fecham chega em Pedidos, pronto para você confirmar.
           </p>
-          <p className="mt-6 inline-flex rounded-full bg-white/10 px-3 py-1.5 text-[13.5px] text-white/85">
-            Em construção agora
-          </p>
+          <div className="mt-6 flex flex-wrap gap-2">
+            <Link href="/painel/vitrine" className="flex h-11 items-center rounded-campo bg-ultramar px-4 text-[15px] font-semibold">
+              Pegar o link
+            </Link>
+            <Link href="/painel/pedidos" className="flex h-11 items-center rounded-campo border border-white/25 px-4 text-[15px] font-semibold">
+              Ver pedidos
+            </Link>
+          </div>
         </div>
 
         <div>

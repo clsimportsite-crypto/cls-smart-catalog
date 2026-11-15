@@ -556,6 +556,8 @@ export type Database = {
           logo_url: string | null
           nome: string
           publicada: boolean
+          retiradas: string[]
+          segura_minutos: number
           slug: string
           token_revenda: string
           updated_at: string
@@ -575,6 +577,8 @@ export type Database = {
           logo_url?: string | null
           nome: string
           publicada?: boolean
+          retiradas?: string[]
+          segura_minutos?: number
           slug: string
           token_revenda?: string
           updated_at?: string
@@ -594,6 +598,8 @@ export type Database = {
           logo_url?: string | null
           nome?: string
           publicada?: boolean
+          retiradas?: string[]
+          segura_minutos?: number
           slug?: string
           token_revenda?: string
           updated_at?: string
@@ -703,6 +709,87 @@ export type Database = {
           },
         ]
       }
+      cat_pedido_itens: {
+        Row: {
+          descricao: string
+          empresa_id: string
+          id: string
+          pedido_id: string
+          preco: number
+          produto_id: string | null
+        }
+        Insert: {
+          descricao: string
+          empresa_id: string
+          id?: string
+          pedido_id: string
+          preco: number
+          produto_id?: string | null
+        }
+        Update: {
+          descricao?: string
+          empresa_id?: string
+          id?: string
+          pedido_id?: string
+          preco?: number
+          produto_id?: string | null
+        }
+        Relationships: []
+      }
+      cat_pedidos: {
+        Row: {
+          atendido_em: string | null
+          atendido_por: string | null
+          canal: string
+          comprador_nome: string
+          comprador_whatsapp: string
+          created_at: string
+          empresa_id: string
+          entrega: string
+          id: string
+          numero: number
+          observacao: string | null
+          pagamento: string
+          sessao: string | null
+          status: string
+          total: number
+        }
+        Insert: {
+          atendido_em?: string | null
+          atendido_por?: string | null
+          canal?: string
+          comprador_nome: string
+          comprador_whatsapp: string
+          created_at?: string
+          empresa_id: string
+          entrega: string
+          id?: string
+          numero: number
+          observacao?: string | null
+          pagamento: string
+          sessao?: string | null
+          status?: string
+          total: number
+        }
+        Update: {
+          atendido_em?: string | null
+          atendido_por?: string | null
+          canal?: string
+          comprador_nome?: string
+          comprador_whatsapp?: string
+          created_at?: string
+          empresa_id?: string
+          entrega?: string
+          id?: string
+          numero?: number
+          observacao?: string | null
+          pagamento?: string
+          sessao?: string | null
+          status?: string
+          total?: number
+        }
+        Relationships: []
+      }
       cat_precos: {
         Row: {
           canal: string
@@ -752,7 +839,10 @@ export type Database = {
           armazenamento: string | null
           categoria_id: string | null
           chave: string | null
-          condicao: string
+          bateria: number | null
+          condicao: string | null
+          detalhe: string | null
+          foto_url: string | null
           cor: string | null
           created_at: string
           descricao: string | null
@@ -773,7 +863,10 @@ export type Database = {
           armazenamento?: string | null
           categoria_id?: string | null
           chave?: string | null
-          condicao: string
+          bateria?: number | null
+          condicao?: string | null
+          detalhe?: string | null
+          foto_url?: string | null
           cor?: string | null
           created_at?: string
           descricao?: string | null
@@ -794,7 +887,10 @@ export type Database = {
           armazenamento?: string | null
           categoria_id?: string | null
           chave?: string | null
-          condicao?: string
+          bateria?: number | null
+          condicao?: string | null
+          detalhe?: string | null
+          foto_url?: string | null
           cor?: string | null
           created_at?: string
           descricao?: string | null
@@ -925,6 +1021,33 @@ export type Database = {
             referencedColumns: ["id", "empresa_id"]
           },
         ]
+      }
+      cat_reservas: {
+        Row: {
+          ate: string
+          created_at: string
+          empresa_id: string
+          pedido_id: string | null
+          produto_id: string
+          sessao: string
+        }
+        Insert: {
+          ate: string
+          created_at?: string
+          empresa_id: string
+          pedido_id?: string | null
+          produto_id: string
+          sessao: string
+        }
+        Update: {
+          ate?: string
+          created_at?: string
+          empresa_id?: string
+          pedido_id?: string | null
+          produto_id?: string
+          sessao?: string
+        }
+        Relationships: []
       }
       cat_taxas_cartao: {
         Row: {
@@ -3428,6 +3551,23 @@ export type Database = {
       cat_gestor: { Args: { eid: string }; Returns: boolean }
       cat_membro: { Args: { eid: string }; Returns: boolean }
       cat_papel: { Args: { eid: string }; Returns: string }
+      cat_pedido_resolver: { Args: { p_pedido: string; p_acao: string }; Returns: string }
+      cat_revenda_pedir: {
+        Args: {
+          p_token: string
+          p_sessao: string
+          p_nome: string
+          p_whatsapp: string
+          p_pagamento: string
+          p_entrega: string
+          p_obs: string
+          p_produtos: string[]
+        }
+        Returns: Json
+      }
+      cat_revenda_segurar: { Args: { p_token: string; p_sessao: string; p_produto: string }; Returns: Json }
+      cat_revenda_soltar: { Args: { p_token: string; p_sessao: string; p_produto: string }; Returns: boolean }
+      cat_revenda_vitrine: { Args: { p_token: string; p_sessao?: string }; Returns: Json }
       empresa_existe: { Args: { eid: string }; Returns: boolean }
       registrar_venda: { Args: { p: Json }; Returns: Json }
       user_empresa_id: { Args: never; Returns: string }

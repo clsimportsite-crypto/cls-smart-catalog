@@ -12,6 +12,7 @@ import {
   ClipboardCheck,
   FileUp,
   House,
+  Inbox,
   LogOut,
   Store,
   Tags,
@@ -27,11 +28,12 @@ type Item = { href: string; rotulo: string; icone: LucideIcon; fase?: number; ce
 // Itens com "fase" ainda não existem: aparecem desativados, com a fase em que chegam.
 const ITENS: Item[] = [
   { href: "/painel", rotulo: "Início", icone: House, celular: true },
-  { href: "/painel/importar", rotulo: "Importar", icone: FileUp, fase: 1, celular: true },
+  { href: "/painel/pedidos", rotulo: "Pedidos", icone: Inbox, celular: true },
+  { href: "/painel/importar", rotulo: "Importar", icone: FileUp, fase: 1 },
   { href: "/painel/revisao", rotulo: "Revisão", icone: ClipboardCheck, fase: 1 },
-  { href: "/painel/produtos", rotulo: "Produtos", icone: Boxes, fase: 2, celular: true },
+  { href: "/painel/produtos", rotulo: "Produtos", icone: Boxes, celular: true },
   { href: "/painel/precos", rotulo: "Preços", icone: Tags, fase: 2 },
-  { href: "/painel/vitrine", rotulo: "Vitrine", icone: Store, fase: 4, celular: true },
+  { href: "/painel/vitrine", rotulo: "Vitrine", icone: Store, celular: true },
   { href: "/painel/relatorios", rotulo: "Relatórios", icone: BarChart3, fase: 5 },
   { href: "/painel/equipe", rotulo: "Equipe", icone: Users, celular: true },
 ];
