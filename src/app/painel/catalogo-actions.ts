@@ -23,6 +23,13 @@ const CONDICOES = ["lacrado", "seminovo", "usado", "cpo"];
 const STATUS = ["ativo", "indisponivel", "vendido", "arquivado"];
 const texto = (v: string) => v.trim() || null;
 
+/** "4.900", "4900,50" e "4900.50" viram número. Ponto seguido de 3 dígitos é milhar; o resto é centavo. */
+function lerPreco(v: string): number {
+  const s = v.replace(/[^\d.,]/g, "");
+  if (s.includes(",")) return Number(s.replace(/\./g, "").replace(",", "."));
+  return Number(/^\d{1,3}(\.\d{3})+$/.test(s) ? s.replace(/\./g, "") : s);
+}
+
 function slugDe(...partes: (string | null)[]) {
   const base = partes
     .filter(Boolean)
@@ -44,7 +51,7 @@ export async function salvarProduto(d: DadosProduto): Promise<Resposta> {
   if (!nome) return { erro: "Dê um nome ao aparelho." };
   const bateria = d.bateria.trim() ? Number(d.bateria) : null;
   if (bateria != null && (!Number.isInteger(bateria) || bateria < 1 || bateria > 100)) return { erro: "A bateria vai de 1 a 100." };
-  const preco = d.preco.trim() ? Number(d.preco.replace(/\./g, "").replace(",", ".")) : null;
+  const preco = d.preco.trim() ? lerPreco(d.preco) : null;
   if (preco != null && !(preco > 0)) return { erro: "O preço precisa ser maior que zero." };
   if (!STATUS.includes(d.status)) return { erro: "Situação inválida." };
 

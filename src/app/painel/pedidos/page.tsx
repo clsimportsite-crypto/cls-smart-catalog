@@ -4,7 +4,7 @@ import { MessageCircle } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { carregarSessao } from "@/lib/loja";
 import { brl, NOME_PAGAMENTO, whatsappLink } from "@/lib/aparelho";
-import { AcoesPedido, AtualizaSozinho } from "./acoes";
+import { AcoesPedido, AtualizaSozinho, LigarNotificacao } from "./acoes";
 
 export const metadata: Metadata = { title: "Pedidos" };
 
@@ -42,6 +42,7 @@ export default async function PaginaPedidos() {
           : "O que os revendedores fecham na vitrine chega aqui pronto. Esta tela se atualiza sozinha."}
       </p>
 
+      <LigarNotificacao />
       {error ? (
         <p role="alert" className="mt-8 rounded-campo bg-alerta-claro px-4 py-3 text-[15px] text-[#a3380a]">
           Não deu para carregar os pedidos. Recarregue a página.

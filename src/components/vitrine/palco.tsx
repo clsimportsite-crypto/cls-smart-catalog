@@ -381,7 +381,7 @@ export function Palco({
             <p className="flex h-14 items-center justify-center gap-2 rounded-2xl bg-white/10 px-3 text-[15.5px] font-semibold">
               <Check size={18} strokeWidth={2.6} className="shrink-0 text-ultramar-luz" />
               <span className="truncate">
-                No seu pedido · <Contagem ate={item.ate} className="font-mono tabular-nums" />
+                {item.ate ? <>No seu pedido · <Contagem ate={item.ate} className="font-mono tabular-nums" /></> : "No seu pedido · aguardando a loja"}
               </span>
             </p>
           )}
@@ -389,7 +389,7 @@ export function Palco({
             <p className="flex h-14 items-center justify-center gap-2 rounded-2xl bg-white/8 px-3 text-[15px] text-white/80">
               <Lock size={16} className="shrink-0" />
               <span className="truncate">
-                Segurado · libera em <Contagem ate={item.ate} className="font-mono tabular-nums text-white" />
+                {item.ate ? <>Segurado · libera em <Contagem ate={item.ate} className="font-mono tabular-nums text-white" /></> : "No pedido de outro revendedor"}
               </span>
             </p>
           )}

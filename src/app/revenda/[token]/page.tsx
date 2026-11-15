@@ -4,7 +4,13 @@ import { createClient } from "@/lib/supabase/server";
 import { Vitrine } from "@/components/vitrine/vitrine";
 import type { DadosVitrine } from "@/lib/aparelho";
 
-export const metadata: Metadata = { title: "Revenda", robots: { index: false, follow: false } };
+const descricao = "Aparelhos disponíveis agora, com a cor e a bateria de cada unidade. Pegue o seu e feche o pedido.";
+export const metadata: Metadata = {
+  title: { absolute: "CLS Import · Revenda" },
+  description: descricao,
+  openGraph: { title: "CLS Import · Revenda", description: descricao, type: "website", locale: "pt_BR" },
+  robots: { index: false, follow: false },
+};
 export const viewport: Viewport = { themeColor: "#0a0b0f", width: "device-width", initialScale: 1 };
 
 /** Vitrine de revenda: pública, mas só abre com o código do link que a loja envia. */

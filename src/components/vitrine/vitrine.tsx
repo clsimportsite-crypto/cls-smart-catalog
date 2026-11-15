@@ -13,6 +13,7 @@ const MOTIVOS: Record<string, string> = {
   segurado: "Outro revendedor pegou este agora há pouco.",
   indisponivel: "Este aparelho acabou de sair da vitrine.",
   limite: "Sua bandeja está cheia. Feche o pedido ou solte um aparelho.",
+  repetido: "Você já segurou este aparelho duas vezes. Para ficar com ele, fale com o vendedor.",
   link: "Este link de revenda não vale mais. Peça o link novo ao vendedor.",
 };
 const CHAVE_SESSAO = "cls-rv-sessao";

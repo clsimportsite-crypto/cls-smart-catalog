@@ -2,6 +2,7 @@ import { carregarSessao } from "@/lib/loja";
 import { Marca } from "@/components/marca";
 import { NavCelular, NavLateral } from "./nav";
 import { sair } from "./actions";
+import { AvisoPedidos } from "./aviso-pedidos";
 
 export default async function LayoutPainel({ children }: { children: React.ReactNode }) {
   const sessao = await carregarSessao();
@@ -25,6 +26,7 @@ export default async function LayoutPainel({ children }: { children: React.React
 
   return (
     <div className="flex min-h-dvh">
+      <AvisoPedidos empresaId={sessao.atual.empresaId} />
       <NavLateral lojas={sessao.lojas} atual={sessao.atual} nome={sessao.nome} />
       <div className="min-w-0 flex-1">
         <header className="flex items-center justify-between px-5 pt-5 lg:hidden">

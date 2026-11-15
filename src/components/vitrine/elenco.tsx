@@ -150,7 +150,7 @@ export function Elenco({
                 {preso && <Lock size={16} aria-hidden className="absolute text-white" />}
               </span>
               <span className="relative font-mono text-[11.5px] font-medium tabular-nums text-white/90">
-                {preso ? <Contagem ate={i.ate} /> : i.preco.toLocaleString("pt-BR")}
+                {preso ? i.ate ? <Contagem ate={i.ate} /> : "pedido" : i.preco.toLocaleString("pt-BR")}
               </span>
               {i.bateria != null && (
                 <span className={clsx("absolute right-1.5 top-1 font-mono text-[10.5px] tabular-nums", i.bateria < 85 ? "text-[#ffb45c]" : "text-white/65")}>

@@ -42,3 +42,21 @@ export function AcoesPedido({ id }: { id: string }) {
     </>
   );
 }
+
+/** Pede ao navegador para avisar de pedido novo mesmo com a aba em segundo plano. */
+export function LigarNotificacao() {
+  const [estado, setEstado] = useState<string>("default");
+  useEffect(() => {
+    setEstado(typeof Notification === "undefined" ? "sem" : Notification.permission);
+  }, []);
+  if (estado !== "default") return null;
+  return (
+    <button
+      type="button"
+      onClick={async () => setEstado(await Notification.requestPermission())}
+      className="mt-4 h-11 rounded-campo border border-linha bg-branco px-4 text-[14.5px] font-medium"
+    >
+      Avisar neste aparelho quando chegar pedido
+    </button>
+  );
+}
