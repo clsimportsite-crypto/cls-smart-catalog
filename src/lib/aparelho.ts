@@ -159,3 +159,51 @@ export function whatsappLink(numero: string, texto: string): string {
   const d = numero.replace(/\D/g, "");
   return `https://wa.me/${d.length <= 11 ? "55" + d : d}?text=${encodeURIComponent(texto)}`;
 }
+
+/** Um modelo na vitrine: as unidades com o mesmo nome, memória, detalhe e condição. */
+export type Modelo = {
+  chave: string;
+  nome: string;
+  armazenamento: string | null;
+  detalhe: string | null;
+  condicao: string | null;
+  categoria: string | null;
+  categoria_nome: string | null;
+  unidades: Item[];
+  menor: number;
+  maior: number;
+};
+
+export function agrupar(itens: Item[]): Modelo[] {
+  const mapa = new Map<string, Modelo>();
+  for (const i of itens) {
+    const chave = [i.nome, i.armazenamento, i.detalhe, i.condicao].map((v) => v ?? "").join("|").toLowerCase();
+    let m = mapa.get(chave);
+    if (!m) {
+      m = { chave, nome: i.nome, armazenamento: i.armazenamento, detalhe: i.detalhe, condicao: i.condicao, categoria: i.categoria, categoria_nome: i.categoria_nome, unidades: [], menor: i.preco, maior: i.preco };
+      mapa.set(chave, m);
+    }
+    m.unidades.push(i);
+    m.menor = Math.min(m.menor, i.preco);
+    m.maior = Math.max(m.maior, i.preco);
+  }
+  for (const m of mapa.values()) {
+    m.unidades.sort((a, b) => a.preco - b.preco || (b.bateria ?? 0) - (a.bateria ?? 0) || a.id.localeCompare(b.id));
+  }
+  return [...mapa.values()];
+}
+
+/** "89–93%" ou "95%". Vazio quando nenhuma unidade informa bateria. */
+export function faixaBateria(unidades: Item[]): string {
+  const b = unidades.map((u) => u.bateria).filter((v): v is number => v != null);
+  if (!b.length) return "";
+  const [min, max] = [Math.min(...b), Math.max(...b)];
+  return min === max ? `${min}%` : `${min}–${max}%`;
+}
+
+/** Tudo o que se pode buscar num modelo, sem acento e em minúsculas. */
+export function textoBusca(m: Modelo): string {
+  return semAcento([m.nome, m.armazenamento, m.detalhe, m.categoria_nome, m.condicao ? NOME_CONDICAO[m.condicao] : "", ...m.unidades.map((u) => u.cor ?? "")].join(" "));
+}
+
+export const normalizar = semAcento;

@@ -35,7 +35,7 @@ export function Bandeja({ itens, barraRef, onAbrir }: { itens: Item[]; barraRef:
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: 90, opacity: 0 }}
       transition={{ type: "spring", stiffness: 380, damping: 32 }}
-      className="mx-3 mb-[max(12px,env(safe-area-inset-bottom))] flex shrink-0 items-center gap-3 rounded-[22px] bg-white p-2 pl-4 text-noite shadow-[0_-10px_40px_-10px_rgb(0_0_0/0.8)]"
+      className="pointer-events-auto mx-3 mb-[max(12px,env(safe-area-inset-bottom))] flex w-full items-center gap-3 rounded-[24px] bg-tinta p-2 pl-4 text-white shadow-[0_18px_40px_-14px_rgb(21_23_28/0.7)]"
     >
       <div aria-hidden className="flex shrink-0 -space-x-2.5">
         {itens.slice(0, 4).map((i) => (
@@ -45,18 +45,18 @@ export function Bandeja({ itens, barraRef, onAbrir }: { itens: Item[]; barraRef:
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 500, damping: 22, delay: 0.3 }}
-            className="h-7 w-7 rounded-full ring-2 ring-white"
-            style={{ background: corHex(i.cor, i.nome), boxShadow: "inset 0 0 0 1px rgb(21 23 28 / 0.25)" }}
+            className="h-7 w-7 rounded-full ring-2 ring-tinta"
+            style={{ background: corHex(i.cor, i.nome), boxShadow: "inset 0 0 0 1.5px rgb(255 255 255 / 0.45)" }}
           />
         ))}
       </div>
       <div className="min-w-0 flex-1 leading-tight">
-        <p className="truncate font-mono text-[16px] font-semibold tracking-[-0.02em]">{brl(total)}</p>
-        <p className="truncate text-[12.5px] text-grafite">
-          {itens.length === 1 ? "1 aparelho" : `${itens.length} aparelhos`} · <Contagem ate={primeiro} className="font-mono tabular-nums text-tinta" />
+        <p className="truncate font-display text-[18px] font-bold tabular-nums tracking-[-0.02em]">{brl(total)}</p>
+        <p className="truncate text-[12.5px] text-white/65">
+          {itens.length === 1 ? "1 aparelho" : `${itens.length} aparelhos`} · <Contagem ate={primeiro} className="font-mono tabular-nums text-white" />
         </p>
       </div>
-      <button type="button" onClick={onAbrir} className="h-12 shrink-0 rounded-2xl bg-ultramar px-4 text-[15px] font-semibold text-white transition hover:bg-ultramar-escuro">
+      <button type="button" onClick={onAbrir} className="h-12 shrink-0 rounded-[18px] bg-ultramar px-4 text-[15px] font-semibold text-white transition hover:bg-[#2c40ff]">
         Fechar pedido
       </button>
     </motion.div>
@@ -186,7 +186,7 @@ export function FecharPedido({
                       <span className="block truncate text-[15px] font-semibold">{i.nome}</span>
                       <span className="block truncate text-[13px] text-grafite">{resumo(i)}</span>
                     </span>
-                    <span className="font-mono text-[14.5px] font-semibold">{brl(i.preco)}</span>
+                    <span className="font-display text-[15.5px] font-bold tabular-nums">{brl(i.preco)}</span>
                   </li>
                 ))}
               </ul>
@@ -200,7 +200,7 @@ export function FecharPedido({
               </dl>
               <p className="mt-4 flex items-baseline justify-between">
                 <span className="text-[14.5px] text-grafite">Total</span>
-                <span className="font-mono text-[28px] font-semibold tracking-[-0.02em]">{brl(recibo.total)}</span>
+                <span className="font-display text-[30px] font-bold tabular-nums tracking-[-0.03em]">{brl(recibo.total)}</span>
               </p>
             </div>
 
@@ -248,7 +248,7 @@ export function FecharPedido({
                           {resumo(i)} · <Contagem ate={i.ate} className="font-mono tabular-nums" />
                         </span>
                       </span>
-                      <span className="font-mono text-[15px] font-semibold">{brl(i.preco)}</span>
+                      <span className="font-display text-[16px] font-bold tabular-nums">{brl(i.preco)}</span>
                       <button type="button" onClick={() => onSoltar(i)} aria-label={`Tirar ${i.nome} da bandeja`} className="grid h-11 w-11 shrink-0 place-items-center rounded-xl text-grafite hover:bg-titanio">
                         <X size={16} />
                       </button>

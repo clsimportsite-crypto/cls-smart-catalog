@@ -71,12 +71,12 @@ body {
 }
 
 /* Vitrine: tamanho da peça no palco (1u = 1% da altura do aparelho) */
-.palco-peca {
-  --u: calc(min(31dvh, 62vw) / 100);
+.detalhe-peca {
+  --u: calc(min(35dvh, 76vw) / 100);
 }
 @media (min-width: 1024px) {
-  .palco-peca {
-    --u: calc(min(60dvh, 30vw) / 100);
+  .detalhe-peca {
+    --u: calc(min(58dvh, 28vw) / 100);
   }
 }
 .vitrine :focus-visible {

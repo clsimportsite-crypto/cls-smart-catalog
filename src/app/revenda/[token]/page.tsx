@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: { title: "CLS Import · Revenda", description: descricao, type: "website", locale: "pt_BR" },
   robots: { index: false, follow: false },
 };
-export const viewport: Viewport = { themeColor: "#0a0b0f", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#e6e8eb", width: "device-width", initialScale: 1 };
 
 /** Vitrine de revenda: pública, mas só abre com o código do link que a loja envia. */
 export default async function PaginaRevenda({ params }: { params: Promise<{ token: string }> }) {
